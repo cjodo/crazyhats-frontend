@@ -2,6 +2,7 @@
   --paper: #ffffff;
   --sage: #edf5e7;
   --sage-deep: #dcebd1;
+  --hero: linear-gradient(180deg, #d4e7c6, #e3efda);
   --leaf: #7aa865;
   --pine: #2c4a2a;
   --ink: #2a2f2a;
@@ -47,18 +48,19 @@ p { margin: 0 0 1em; }
 .menu-toggle { display: none; background: none; border: 0; font: italic 1rem var(--body); color: var(--pine); padding: 8px 0; }
 
 /* ---------- hero ---------- */
-.hero { position: relative; overflow: hidden; padding: 64px 0 88px; }
+.hero { position: relative; overflow: hidden; padding: 64px 0 88px; background: var(--hero); border-bottom: 1px solid var(--rule); --muted: #434b42; --pine: #213a20; color: #1f241f; }
+.hero-links a:not(.btn) { text-decoration-color: var(--pine); }
 .hero-bg {
   position: absolute; left: -60px; bottom: -120px; width: 520px; max-width: 70%;
-  opacity: .16; filter: saturate(.4);
+  opacity: .3; filter: saturate(.4);
   mask-image: radial-gradient(closest-side, #000 55%, transparent);
   -webkit-mask-image: radial-gradient(closest-side, #000 55%, transparent);
   pointer-events: none;
 }
 .hero .wrap { position: relative; display: grid; grid-template-columns: 1.15fr .85fr; gap: 40px; align-items: center; }
 .hero h1 { font-size: clamp(3.4rem, 10vw, 6.4rem); margin-bottom: .1em; letter-spacing: -.01em; }
-.hero .sub { font-size: 1.3rem; margin-bottom: .3em; }
-.hero .tagline { font-style: italic; color: var(--muted); margin-bottom: 1.8em; }
+.hero .sub { font-size: 1.3rem; margin-bottom: 1.6em; }
+.hero .tagline { font-style: italic; color: var(--muted); font-size: 1.1rem; margin-bottom: .2em; }
 .hero-links { display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center; font-size: 1.1rem; }
 .btn { display: inline-block; background: var(--pine); color: #fff; text-decoration: none; padding: 12px 22px; border-radius: 3px; }
 .btn:hover { background: var(--leaf); color: #fff; }
@@ -70,6 +72,7 @@ p { margin: 0 0 1em; }
 .print img { aspect-ratio: 4/5; object-fit: cover; width: 100%; }
 .print figcaption { position: absolute; bottom: 7px; left: 0; right: 0; text-align: center; font-style: italic; font-size: .9rem; color: var(--muted); }
 .print::before { content: ""; position: absolute; top: -12px; left: 50%; width: 84px; height: 24px; margin-left: -42px; background: rgba(205, 225, 190, .75); transform: rotate(-3deg); }
+.hero .print::before { background: rgba(255, 255, 255, .75); }
 .print.one { left: 0; top: 10px; transform: rotate(-4deg); }
 .print.two { right: 0; top: 130px; transform: rotate(3.5deg); }
 
