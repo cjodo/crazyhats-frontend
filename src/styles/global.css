@@ -67,14 +67,14 @@ p { margin: 0 0 1em; }
 .licensed { margin-top: 26px; font-size: .95rem; color: var(--muted); }
 
 /* photos as prints with tape */
-.prints { position: relative; height: 500px; }
+.prints { position: relative; aspect-ratio: 10 / 11; }
 .print { position: absolute; background: #fff; padding: 10px 10px 34px; margin: 0; box-shadow: 0 2px 4px rgba(0,0,0,.06), 0 14px 28px rgba(44,74,42,.14); width: 52%; }
 .print img { aspect-ratio: 4/5; object-fit: cover; width: 100%; }
 .print figcaption { position: absolute; bottom: 7px; left: 0; right: 0; text-align: center; font-style: italic; font-size: .9rem; color: var(--muted); }
 .print::before { content: ""; position: absolute; top: -12px; left: 50%; width: 84px; height: 24px; margin-left: -42px; background: rgba(205, 225, 190, .75); transform: rotate(-3deg); }
 .hero .print::before { background: rgba(255, 255, 255, .75); }
 .print.one { left: 0; top: 10px; transform: rotate(-4deg); }
-.print.two { right: 0; top: 130px; transform: rotate(3.5deg); }
+.print.two { right: 0; top: 26%; transform: rotate(3.5deg); }
 
 /* ---------- about ---------- */
 .about { padding: 40px 0 90px; }
@@ -166,7 +166,9 @@ footer a { color: #fff; }
   .nav a { padding: 9px 0; }
   .hero { padding: 40px 0 60px; }
   .hero .wrap, .about .wrap, .visit .wrap { grid-template-columns: 1fr; gap: 40px; }
-  .prints { height: 400px; }
+  .prints { aspect-ratio: auto; display: grid; grid-template-columns: 1fr 1fr; align-items: start; gap: 16px; width: 100%; max-width: 480px; margin: 0 auto; padding: 12px 4px 0; }
+  .prints .print { position: relative; width: auto; left: auto; right: auto; top: auto; }
+  .prints .print.two { margin-top: 40px; }
   .about .print { width: 94%; margin: 0 auto; }
   .services .wrap { grid-template-columns: 1fr; }
   .services article, .services article:first-child, .services article:last-child { padding: 0; border: 0; }
