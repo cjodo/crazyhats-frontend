@@ -1,0 +1,38 @@
+---
+// Hand-drawn style daisy. Petals vary slightly in length and angle so it
+// doesn't look machine-perfect.
+interface Props {
+  size?: number;
+  class?: string;
+  center?: boolean;
+}
+const { size = 28, class: className, center = true } = Astro.props;
+
+const petals = [
+  [0, 30], [27, 27], [58, 31], [88, 28], [118, 30], [147, 26],
+  [176, 31], [207, 28], [236, 30], [266, 27], [296, 31], [327, 28],
+];
+---
+
+<svg
+  class:list={['daisy', className]}
+  width={size}
+  height={size}
+  viewBox="-40 -40 80 80"
+  aria-hidden="true"
+  fill="none"
+  stroke="currentColor"
+  stroke-width="2.2"
+  stroke-linecap="round"
+>
+  {
+    petals.map(([angle, len]) => (
+      <path
+        transform={`rotate(${angle})`}
+        d={`M0 -8 C 6 -${len * 0.45} 5 -${len} 0 -${len + 2} C -5 -${len} -6 -${len * 0.45} 0 -8`}
+        fill="var(--petal, #fff)"
+      />
+    ))
+  }
+  {center && <circle r="9" fill="var(--daisy-center, #ecc94b)" />}
+</svg>

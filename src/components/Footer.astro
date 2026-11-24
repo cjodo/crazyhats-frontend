@@ -1,0 +1,26 @@
+---
+import { Image } from 'astro:assets';
+import { site } from '../data/site';
+import Daisy from './Daisy.astro';
+import field from '../assets/daisies-field.jpg';
+const year = new Date().getFullYear();
+---
+
+<div class="daisy-band" aria-hidden="true">
+  <Image src={field} alt="" widths={[800, 1600, 2400, 3200]} sizes="100vw" quality={80} />
+</div>
+<footer>
+  <div class="wrap">
+    <div>
+      <span class="brand"><Daisy size={22} center={false} />Crazy Hats</span>
+      Arts &amp; Food Lounge · {site.address.join(', ')}
+    </div>
+    <div>
+      © {year} {site.fullName}<br />
+      <span class="credit">
+        Daisy photos by Ron Cogswell, taken in Banff (<a
+          href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>)
+      </span>
+    </div>
+  </div>
+</footer>

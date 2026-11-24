@@ -1,0 +1,36 @@
+---
+import { site } from '../data/site';
+import Daisy from './Daisy.astro';
+
+const links = [
+  { href: '#menu', label: 'Menu' },
+  { href: '#hats', label: 'Hats' },
+  { href: '#takeout', label: 'Takeout' },
+  { href: '#catering', label: 'Events' },
+  { href: '#visit', label: 'Find us' },
+];
+---
+
+<header class="site-header">
+  <div class="wrap">
+    <a class="brand" href="#top"><Daisy size={26} />Crazy Hats</a>
+    <button class="menu-toggle" aria-expanded="false" aria-controls="nav">menu</button>
+    <nav class="nav" id="nav">
+      {links.map((l) => <a href={l.href}>{l.label}</a>)}
+      <a class="call" href={site.phoneHref}>{site.phone}</a>
+    </nav>
+  </div>
+</header>
+
+<script>
+  const toggle = document.querySelector<HTMLButtonElement>('.menu-toggle')!;
+  const nav = document.getElementById('nav')!;
+  const setOpen = (open: boolean) => {
+    nav.classList.toggle('open', open);
+    toggle.setAttribute('aria-expanded', String(open));
+  };
+  toggle.addEventListener('click', () => setOpen(!nav.classList.contains('open')));
+  nav.addEventListener('click', (e) => {
+    if ((e.target as HTMLElement).tagName === 'A') setOpen(false);
+  });
+</script>

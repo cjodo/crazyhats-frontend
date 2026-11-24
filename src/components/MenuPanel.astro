@@ -1,0 +1,72 @@
+---
+import type { Menu } from '../data/menu';
+
+interface Props {
+  menu: Menu;
+  active?: boolean;
+}
+
+const { menu, active = false } = Astro.props;
+const listGroups = menu.groups.filter((g) => g.list);
+const itemGroups = menu.groups.filter((g) => g.items);
+---
+
+<div class:list={['panel', { active }]} id={menu.id} role="tabpanel">
+  <h3>{menu.title}</h3>
+
+  {
+    itemGroups.map((g) => (
+      <>
+        {g.title && <h4 class="group-title">{g.title}</h4>}
+        <ul class="items">
+          {g.items!.map((item) => (
+            <li class="item">
+              <div class="item-top">
+                <span class="item-name">
+                  {item.name}
+                  {item.gf && <abbr class="gf" title="Gluten-free">GF</abbr>}
+                </span>
+                {item.price && (
+                  <>
+                    <span class="leader" />
+                    <span class="price">{item.price}</span>
+                  </>
+                )}
+              </div>
+              {item.desc && <p>{item.desc}</p>}
+              {item.addons && <p class="addons">{item.addons}</p>}
+            </li>
+          ))}
+        </ul>
+      </>
+    ))
+  }
+
+  {
+    listGroups.length > 0 && (
+      <div class="cols">
+        {listGroups.map((g) => (
+          <div>
+            <h4 class="group-title">{g.title}</h4>
+            <ul>
+              {g.list!.map((name) => (
+                <li>{name}</li>
+              ))}
+            </ul>
+          </div>
+        ))}
+      </div>
+    )
+  }
+
+  <slot />
+
+  {
+    menu.note && (
+      <p class="note">
+        <strong>{menu.note.label}</strong>
+        {menu.note.text}
+      </p>
+    )
+  }
+</div>

@@ -1,0 +1,195 @@
+---
+import { Image } from 'astro:assets';
+import Layout from '../layouts/Layout.astro';
+import MenuPanel from '../components/MenuPanel.astro';
+import Daisy from '../components/Daisy.astro';
+import { menus, type Menu } from '../data/menu';
+import { site } from '../data/site';
+
+import sangria from '../assets/sangria.jpg';
+import cake from '../assets/cake.jpg';
+import iceCream from '../assets/ice-cream.jpg';
+import blueberry from '../assets/smoothie-blueberry.jpg';
+import mango from '../assets/smoothie-mango.jpg';
+import strawberry from '../assets/smoothie-strawberry.jpg';
+import daisies from '../assets/daisies-pair.jpg';
+
+// Desserts is mostly photos, so it's defined here and slotted into its panel.
+const desserts: Menu = { id: 'desserts', tab: 'Desserts', title: 'Smoothies, Cakes & Ice Cream', groups: [] };
+const tabs = [...menus.slice(0, 2), desserts, ...menus.slice(2)];
+
+const dessertPhotos = [
+  { src: blueberry, label: 'blueberry', alt: 'Blueberry smoothie' },
+  { src: mango, label: 'mango', alt: 'Mango smoothie' },
+  { src: strawberry, label: 'strawberry', alt: 'Strawberry smoothie' },
+  { src: iceCream, label: 'sundaes', alt: 'Ice cream sundaes in cocktail glasses' },
+];
+---
+
+<Layout>
+  <section class="hero">
+    <Image class="hero-bg" src={daisies} alt="" widths={[520, 1040, 1400]} sizes="(max-width: 860px) 70vw, 520px" loading="eager" />
+    <div class="wrap">
+      <div>
+        <h1>Crazy Hats</h1>
+        <p class="sub">Arts &amp; food lounge on Main Street, Canmore.</p>
+        <p class="tagline">{site.tagline}</p>
+        <div class="hero-links">
+          <a class="btn" href="#menu">See the menu</a>
+          <a href={site.phoneHref}>or call for takeout: {site.phone}</a>
+        </div>
+        <p class="licensed">Yes, we are licensed and serve alcohol.</p>
+      </div>
+      <div class="prints">
+        <figure class="print one">
+          <Image src={sangria} alt="A glass of house sangria on the patio" width={480} loading="eager" />
+          <figcaption>sangria</figcaption>
+        </figure>
+        <figure class="print two">
+          <Image src={cake} alt="A slice of house-baked chocolate cake" width={480} loading="eager" />
+          <figcaption>house-baked cake</figcaption>
+        </figure>
+      </div>
+    </div>
+  </section>
+
+  <section class="about" id="about">
+    <div class="wrap">
+      <div>
+        <p class="lead">An intimate arts &amp; food lounge in downtown Canmore.</p>
+        <p>
+          Healthy, freshly prepared meals, a collection of lounge music, and an arts and crafts display featuring
+          Alberta artists, jewellers and craft designers.
+        </p>
+        <p class="payment">We accept Visa, Mastercard, American Express, debit, and Canadian and US currency.</p>
+      </div>
+      <figure class="print">
+        <Image src={iceCream} alt="Two ice cream sundaes in cocktail glasses" width={800} />
+        <figcaption>ice cream in a cocktail glass</figcaption>
+      </figure>
+    </div>
+  </section>
+
+  <section class="hats" id="hats">
+    <div class="wrap">
+      <Daisy size={34} />
+      <h2>We also sell hats.</h2>
+      <p>Alongside our display of work by Alberta artists, jewellers and craft designers.</p>
+    </div>
+  </section>
+
+  <section class="menu" id="menu">
+    <div class="wrap">
+      <div class="menu-head">
+        <h2>The Menu</h2>
+        <p>All menu items are available for takeout.</p>
+      </div>
+
+      <div class="tabs" role="tablist">
+        {
+          tabs.map((m, i) => (
+            <>
+              {i > 0 && <Daisy size={12} center={false} />}
+              <button class="tab" role="tab" data-panel={m.id} aria-selected={i === 0 ? 'true' : 'false'}>
+                {m.tab}
+              </button>
+            </>
+          ))
+        }
+      </div>
+
+      {
+        tabs.map((m, i) =>
+          m.id === 'desserts' ? (
+            <MenuPanel menu={m}>
+              <p class="intro">
+                Artisan cakes, cupcakes, muffins and pastries, baked daily. Smoothies are made with real berries and
+                fruit, for the lounge, the patio or takeout. Ice cream is served in wine and cocktail glasses, with an
+                espresso shot or a splash of Irish cream or Sambuca if you like, and is often added to cakes and
+                muffins.
+              </p>
+              <div class="dessert-prints">
+                {dessertPhotos.map((p) => (
+                  <figure class="print">
+                    <Image src={p.src} alt={p.alt} width={400} height={400} fit="cover" />
+                    <figcaption>{p.label}</figcaption>
+                  </figure>
+                ))}
+              </div>
+            </MenuPanel>
+          ) : (
+            <MenuPanel menu={m} active={i === 0} />
+          ),
+        )
+      }
+    </div>
+  </section>
+
+  <section class="services">
+    <div class="wrap">
+      <article id="takeout">
+        <h2>Takeout</h2>
+        <p>
+          All menu items and daily specials are available for takeout, along with all beverages, pop, juices, teas and
+          coffees. Beer and bottled wine are available with food takeouts.
+        </p>
+        <ul>
+          <li>Phone orders are prepaid by credit card.</li>
+          <li>Walk-in takeout takes about 10 minutes.</li>
+          <li>Pick up at {site.address[0]}.</li>
+        </ul>
+        <p><a class="btn" href={site.phoneHref}>Call {site.phone}</a></p>
+      </article>
+      <article id="catering">
+        <h2>Parties &amp; events</h2>
+        <p>
+          Group events, weddings, rehearsals, dance parties, late-night cocktail evenings and themed parties — with
+          cozy seating, buffet service and a top-tier sound system. Events can run until 2&nbsp;AM.
+        </p>
+        <p>
+          We host special-interest, professional and academic groups, golf and carnival parties, and LGBT events. Live
+          music can be pre-ordered.
+        </p>
+        <p>
+          Bookings must be made in advance. Our catering menu, wine and beer list, cocktail list and closed-door event fees are available on request:{' '}
+          <a href={`mailto:${site.email}?subject=Event%20enquiry`}>{site.email}</a>
+        </p>
+      </article>
+    </div>
+  </section>
+
+  <section class="visit" id="visit">
+    <div class="wrap">
+      <div>
+        <h2>Come by</h2>
+        <p class="address">{site.address[0]}<br />{site.address[1]}</p>
+        <dl>
+          <dt>Phone</dt>
+          <dd><a href={site.phoneHref}>{site.phone}</a></dd>
+          <dt>Email</dt>
+          <dd><a href={`mailto:${site.email}`}>{site.email}</a></dd>
+          <dt>Hours</dt>
+          <dd>
+            {site.hours ? site.hours.map((h) => <div>{h}</div>) : <span class="placeholder">to be confirmed</span>}
+          </dd>
+        </dl>
+      </div>
+      <iframe
+        class="map"
+        title="Map to Crazy Hats"
+        loading="lazy"
+        src="https://www.google.com/maps?q=721+Main+Street,+Canmore,+AB+T1W+2P2&output=embed"></iframe>
+    </div>
+  </section>
+</Layout>
+
+<script>
+  const tabs = document.querySelectorAll<HTMLButtonElement>('.tab');
+  const panels = document.querySelectorAll<HTMLElement>('.panel');
+  tabs.forEach((tab) =>
+    tab.addEventListener('click', () => {
+      tabs.forEach((t) => t.setAttribute('aria-selected', String(t === tab)));
+      panels.forEach((p) => p.classList.toggle('active', p.id === tab.dataset.panel));
+    }),
+  );
+</script>
